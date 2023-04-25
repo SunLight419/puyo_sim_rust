@@ -1,5 +1,6 @@
 pub const FIELD_WIDTH: usize = 6;
 pub const FIELD_HEIGHT: usize = 13;
+pub const DEATH_POSITION: usize = 27;
 
 
 const fn create_precomputed_indices() -> [[usize; FIELD_WIDTH]; FIELD_HEIGHT] {
@@ -18,4 +19,4 @@ const fn create_precomputed_indices() -> [[usize; FIELD_WIDTH]; FIELD_HEIGHT] {
     precomputed_indices
 }
 
-pub const PRECOMPUTED_INDICES: [[usize; FIELD_WIDTH]; FIELD_HEIGHT] = create_precomputed_indices();
+pub const POSITION_TO_INDEX: [[usize; FIELD_WIDTH]; FIELD_HEIGHT] = create_precomputed_indices();
