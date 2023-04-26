@@ -2,7 +2,7 @@ use crate::constants::*;
 // use constants::*;
 use colored::*;
 use std::io::{self, Write};
-use proconio::*;
+//use proconio::*;
 
 
 pub fn get_index_by_position(y: u8, x: u8) -> usize {
@@ -36,6 +36,13 @@ impl Field {
                 write_index -= 1;
             }
         }
+    }
+
+    pub fn single_chain(&mut self) -> bool {
+        let is_chained: bool = false;
+
+
+        is_chained
     }
 
     pub fn show(&self) {
