@@ -24,10 +24,8 @@ fn main() {
 
     println!("Press enter to continue... {} {}",  field.is_dead(), FIELD_HEIGHT);
 
-    if field.single_chain() {
-        println!("single chain");
-    } else {
-        println!("not single chain");
+    if field.is_chain() && (field.is_chain() == field.single_chain()) {
+        println!("ok!");
     }
     field.show();
 

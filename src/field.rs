@@ -40,6 +40,52 @@ impl Field {
         }
     }
 
+    pub fn is_chain(&self) -> bool {
+        let mut visited = [false; 78];
+
+        for x in 0..FIELD_WIDTH {
+            for y in 1..FIELD_HEIGHT {
+                let current_index = POSITION_TO_INDEX[y][x];
+                if visited[current_index]{
+                    continue;
+                }
+                if self.cells[current_index] == 0  || self.cells[current_index] == 6 {
+                    continue;
+                }
+                let mut que: VecDeque<usize> = VecDeque::new();
+                let mut connected_puyos = 0;
+                que.push_back(current_index);
+                visited[current_index] = true;
+
+                while !que.is_empty() {
+                    let index = que.pop_front().unwrap();
+                    connected_puyos += 1;
+                    if index % FIELD_HEIGHT > 1 && !visited[index - 1] && self.cells[index - 1] == self.cells[index] {
+                        que.push_back(index - 1);
+                        visited[index - 1] = true;
+                    }
+                    if index % FIELD_HEIGHT < FIELD_HEIGHT - 1 && !visited[index + 1] && self.cells[index + 1] == self.cells[index] {
+                        que.push_back(index + 1);
+                        visited[index + 1] = true;
+                    }
+                    if index / FIELD_HEIGHT > 1 && !visited[index - FIELD_HEIGHT] && self.cells[index - FIELD_HEIGHT] == self.cells[index] {
+                        que.push_back(index - FIELD_HEIGHT);
+                        visited[index - FIELD_HEIGHT] = true;
+                    }
+                    if index / FIELD_HEIGHT < FIELD_WIDTH - 1 && !visited[index + FIELD_HEIGHT] && self.cells[index + FIELD_HEIGHT] == self.cells[index] {
+                        que.push_back(index + FIELD_HEIGHT);
+                        visited[index + FIELD_HEIGHT] = true;
+                    }
+                }
+                if connected_puyos >= 4 {
+                    return true;
+                }
+            }
+        }
+
+        false
+    }
+
     pub fn single_chain(&mut self) -> bool {
         let mut is_chained: bool = false;
         let mut visited = [false; 78];
@@ -58,23 +104,6 @@ impl Field {
                 let mut recorded_index: VecDeque<usize> = VecDeque::new();
                 que.push_back(current_index);
                 visited[current_index] = true;
-
-                // if y > 1 && !visited[current_index - 1] &&  self.cells[current_index - 1] == self.cells[current_index] {
-                //     que.push_back(current_index - 1);
-                //     visited[current_index - 1] = true;
-                // }
-                // if y < FIELD_HEIGHT - 1 && !visited[current_index + 1] && self.cells[current_index + 1] == self.cells[current_index] {
-                //     que.push_back(current_index + 1);
-                //     visited[current_index + 1] = true;
-                // }
-                // if x > 1 && !visited[current_index - FIELD_HEIGHT] && self.cells[current_index - FIELD_HEIGHT] == self.cells[current_index] {
-                //     que.push_back(current_index - FIELD_HEIGHT);
-                //     visited[current_index - FIELD_HEIGHT] = true;
-                // }
-                // if x < FIELD_WIDTH - 1 && !visited[current_index + FIELD_HEIGHT] && self.cells[current_index + FIELD_HEIGHT] == self.cells[current_index] {
-                //     que.push_back(current_index + FIELD_HEIGHT);
-                //     visited[current_index + FIELD_HEIGHT] = true;
-                // }
 
                 while !que.is_empty() {
                     let index = que.pop_front().unwrap();
