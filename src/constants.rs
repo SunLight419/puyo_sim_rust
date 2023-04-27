@@ -1,6 +1,7 @@
 pub const FIELD_WIDTH: usize = 6;
 pub const FIELD_HEIGHT: usize = 13;
 pub const DEATH_POSITION: usize = 27;
+pub const FIELD_SIZE: usize = FIELD_HEIGHT * FIELD_WIDTH;
 
 
 const fn create_precomputed_indices() -> [[usize; FIELD_WIDTH]; FIELD_HEIGHT] {
@@ -20,3 +21,7 @@ const fn create_precomputed_indices() -> [[usize; FIELD_WIDTH]; FIELD_HEIGHT] {
 }
 
 pub const POSITION_TO_INDEX: [[usize; FIELD_WIDTH]; FIELD_HEIGHT] = create_precomputed_indices();
+
+pub fn is_valid_x(x: usize) -> bool { x < FIELD_WIDTH }
+pub fn is_valid_y(y: usize) -> bool { y < FIELD_HEIGHT }
+pub fn is_valid_index(z: usize) -> bool { z < FIELD_SIZE }

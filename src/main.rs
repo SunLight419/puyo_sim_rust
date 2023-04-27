@@ -7,7 +7,14 @@ pub use std::io::{stdin};
 pub use proconio::*;
 
 fn main() {
-    let values: [u8; 78] = [0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 0, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2];
+    let values: [u8; 78] = [
+        0, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 2, 2,
+        2, 7, 7, 1, 2, 3, 4, 5, 6, 7, 3, 2, 3,
+        2, 5, 6, 7, 7, 1, 2, 3, 4, 5, 3, 7, 1,
+        2, 3, 4, 5, 6, 7, 7, 1, 2, 3, 4, 5, 6,
+        2, 1, 2, 3, 4, 5, 6, 7, 6, 1, 2, 3, 4,
+        5, 6, 7, 1, 2, 3, 4, 5, 6, 7, 6, 1, 2
+        ];
 
     let mut field = Field::new(values).expect("Invalid values in the array ");
     field.show();
@@ -16,6 +23,13 @@ fn main() {
 
 
     println!("Press enter to continue... {} {}",  field.is_dead(), FIELD_HEIGHT);
+
+    if field.single_chain() {
+        println!("single chain");
+    } else {
+        println!("not single chain");
+    }
+    field.show();
 
     stdin().read_line(&mut String::new()).unwrap();
     
