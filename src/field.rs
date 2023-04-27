@@ -98,10 +98,27 @@ impl Field {
                 }
                 if recorded_index.len() >= 4 {
                     is_chained = true;
-                    // TODO
 
                     while recorded_index.len() > 0 {
-                        self.cells[recorded_index.pop_front().unwrap()] = 0;
+                        let index = recorded_index.pop_front().unwrap();
+                        self.cells[index] = 0;
+
+                        if index % FIELD_HEIGHT > 1 && self.cells[index - 1] == 6 {
+                            self.cells[index - 1] = 0;
+                            visited[index - 1] = true;
+                        }
+                        if index % FIELD_HEIGHT < FIELD_HEIGHT - 1 && self.cells[index + 1] == 6  {
+                            self.cells[index + 1] = 0;
+                            visited[index + 1] = true;
+                        }
+                        if index / FIELD_HEIGHT > 1 && self.cells[index - FIELD_HEIGHT] == 6  {
+                            self.cells[index - FIELD_HEIGHT] = 0;
+                            visited[index - FIELD_HEIGHT] = true;
+                        }
+                        if index / FIELD_HEIGHT < FIELD_WIDTH - 1 && self.cells[index + FIELD_HEIGHT] == 6 {
+                            self.cells[index + FIELD_HEIGHT] = 0;
+                            visited[index + FIELD_HEIGHT] = true;
+                        }
                     }
                 }
             }
