@@ -86,6 +86,7 @@ impl Field {
         false
     }
 
+    #[inline]
     pub fn single_chain(&mut self) -> bool {
         let mut is_chained: bool = false;
         let mut visited = [false; 78];
@@ -156,6 +157,16 @@ impl Field {
         is_chained
     }
 
+    pub fn chain(&mut self) -> u32 {
+        let mut chain_count:u32 = 0;
+
+        while self.single_chain() {
+            self.fall();
+            chain_count += 1;
+        }
+        chain_count
+    }
+
     pub fn show(&self) {
         let stdout = io::stdout();
         let mut handle = stdout.lock();
@@ -173,7 +184,7 @@ impl Field {
                     4 => "yellow",
                     5 => "magenta",
                     6 => "white",
-                    _ => "black",
+                    _ => "gray",
                 };
                 print!("{} ", "●".color(color));
             }
